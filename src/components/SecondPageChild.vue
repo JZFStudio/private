@@ -1,19 +1,8 @@
 <template>
-  <div class="second-page">
-    <button @click="show">显示</button>
-    <color-input v-model.number="selectionItem.color1">
-      <span style="color: red;">color1 {{inner}}</span>
-      <div slot="top">This is top slot div.</div>
-    </color-input>
-    <color-input v-model.trim="selectionItem.color2">
-      color2
-    </color-input>
-
+  <div class="second-page-child">
     <span>当前页码为：{{pageNum}}</span>
 
     <p v-for="item in list" :key="item.id" class="list">{{item.name}}</p>
-    
-    <router-link to="/third">去子页</router-link>
   </div>
 </template>
 
@@ -23,7 +12,7 @@ import colorInput from './colorInput'
 import {mapGetters, mapState, mapMutations} from 'vuex'
 
 export default {
-  name: 'SecondPage',
+  name: 'SecondPageChild',
   components: {
     colorInput
   },
@@ -48,7 +37,7 @@ export default {
     ]),
     list() {
       let ary = [], n = 0;
-      while(n <= 100) {
+      while(n <= 1000) {
         ary.push({
           id: ++n,
           name: 'This is the ' + n + ' floor.'
@@ -70,7 +59,7 @@ export default {
     
   },
   created() {
-    this.updatePageNum({page: 2});
+    this.updatePageNum({page: '2-1'});
 
     console.log(this.$route);
   },
@@ -82,7 +71,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-  .second-page {
+  .second-page-child {
     text-align: center;
     .list {
       height: 20px;
