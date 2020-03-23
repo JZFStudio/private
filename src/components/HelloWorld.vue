@@ -37,6 +37,9 @@ export default {
   },
   methods: {
     
+  },
+  created() {
+    console.log('hello world created');
   }
 }
 </script>

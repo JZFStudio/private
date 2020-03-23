@@ -73,6 +73,8 @@ export default {
     this.updatePageNum({page: 2});
 
     console.log(this.$route);
+
+    console.log('second page created');
   },
   beforeRouteUpdate (to, from, next) {
     console.log('to', to);
