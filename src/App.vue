@@ -1,30 +1,41 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <keep-alive :exclude="excludeComponents">
+  <div id="app" :style="{height: screenHeight + 'px'}">
+    <keep-alive>
       <router-view/>
     </keep-alive>
   </div>
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
   name: 'App',
+  computed: {
+    ...mapState('body', {
+      screenHeight: state => state.screenHeight
+    })
+  },
   data: function () {
     return {
-      excludeComponents: ['SecondPage']
+      
     }
+  },
+  mounted() {
+    
   }
 }
 </script>
 
 <style>
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

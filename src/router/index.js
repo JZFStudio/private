@@ -1,40 +1,57 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import HelloWorld from '@/components/HelloWorld'
-import SecondPage from '@/components/SecondPage'
-import SecondPageChild from '@/components/SecondPageChild'
-import NotFound from '@/components/NotFound'
+import Home from '@/pages/Home'
+import Index from '@/pages/content/Index'
+import Base from '@/pages/content/Base'
+import Login from '@/pages/Login'
+import NotFound from '@/pages/NotFound'
+
+import utils from '../libs/utils'
 
 Vue.use(Router)
-
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'Home',
+      meta: {
+        check: true
+      },
+      component: Home,
+      children: [
+        {
+          path: 'index',
+          name: 'Index',
+          component: Index
+        },
+        {
+          path: 'base',
+          name: 'Base',
+          component: Base
+        }
+      ]
     },
     {
-      path: '/second',
-      name: 'SecondPage',
-      component: SecondPage,
-      // redirect: '/abc'
-    },
-    {
-      path: '/third',
-      name: 'SecondPageChild',
-      component: SecondPageChild
+      path: '/login',
+      name: 'Login',
+      meta: {},
+      component: Login
     },
     {
       path: '*',
       name: 'NotFound',
       component: NotFound
     }
-  ],
-  scrollBehavior(to, from, savedPosition) {
-    console.log('scrollBehavior', to);
-    console.log(from, savedPosition);
-    return savedPosition || {x: 0, y: 1000}
+  ]
+});
+
+router.beforeEach(function(to, from, next) {
+  if ((to.path === '/login') || !(to.meta && to.meta.check) || utils.checkLogin()) {
+    next();
+  } else {
+    next({path: '/login'});
   }
 })
+
+export default router

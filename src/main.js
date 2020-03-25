@@ -5,10 +5,25 @@ import App from './App'
 import router from './router'
 import store from './store'
 
+import { Layout, Header, Menu, MenuItem, Sider, Submenu, Breadcrumb, BreadcrumbItem, Icon, Input, Checkbox, Button } from 'view-design';
+import 'view-design/dist/styles/iview.css';
+Vue.component('Layout', Layout);
+Vue.component('Header', Header);
+Vue.component('Menu', Menu);
+Vue.component('MenuItem', MenuItem);
+Vue.component('Sider', Sider);
+Vue.component('Submenu', Submenu);
+Vue.component('Breadcrumb', Breadcrumb);
+Vue.component('BreadcrumbItem', BreadcrumbItem);
+Vue.component('Icon', Icon);
+Vue.component('Input', Input);
+Vue.component('Checkbox', Checkbox);
+Vue.component('Button', Button);
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
+export default new Vue({
   el: '#app',
   router,
   store,
