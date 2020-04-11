@@ -3,56 +3,31 @@
     <Layout style="height: 100%;">
       <Header>
         <Menu mode="horizontal" theme="dark" active-name="1">
-          <div class="layout-logo"></div>
+          <div class="layout-logo">Logo</div>
           <div class="layout-nav">
             <MenuItem name="1">
-              <Icon type="ios-navigate"></Icon>Item 1
+              <Icon type="ios-navigate"></Icon>首页
             </MenuItem>
             <MenuItem name="2">
-              <Icon type="ios-keypad"></Icon>Item 2
+              <Icon type="ios-keypad"></Icon>前端开发
             </MenuItem>
             <MenuItem name="3">
-              <Icon type="ios-analytics"></Icon>Item 3
+              <Icon type="ios-analytics"></Icon>其他
             </MenuItem>
-            <MenuItem name="4">
-              <Icon type="ios-paper"></Icon>Item 4
-            </MenuItem>
+            <div class="layout-search">
+              <Input search enter-button placeholder="Enter something..." />
+            </div>
           </div>
         </Menu>
       </Header>
       <Layout>
-        <Sider hide-trigger :style="{background: '#fff'}">
-          <Menu active-name="1-2" theme="light" width="auto" :open-names="['1']">
-            <Submenu name="1">
-              <template slot="title">
-                <Icon type="ios-navigate"></Icon>Item 1
-              </template>
-              <MenuItem name="1-1">Option 1</MenuItem>
-              <MenuItem name="1-2">Option 2</MenuItem>
-              <MenuItem name="1-3">Option 3</MenuItem>
-            </Submenu>
-            <Submenu name="2">
-              <template slot="title">
-                <Icon type="ios-keypad"></Icon>Item 2
-              </template>
-              <MenuItem name="2-1">Option 1</MenuItem>
-              <MenuItem name="2-2">Option 2</MenuItem>
-            </Submenu>
-            <Submenu name="3">
-              <template slot="title">
-                <Icon type="ios-analytics"></Icon>Item 3
-              </template>
-              <MenuItem name="3-1">Option 1</MenuItem>
-              <MenuItem name="3-2">Option 2</MenuItem>
-            </Submenu>
-          </Menu>
-        </Sider>
-        <Layout :style="{padding: '10px'}">
-          <div :style="{height: screenHeight - 84 + 'px'}" style="background-color: #fff;">
-            <router-view></router-view>
-          </div>
-        </Layout>
+        <div :style="{height: screenHeight - 128 + 'px'}" style="background-color: #fff;">
+          <router-view></router-view>
+        </div>
       </Layout>
+      <Footer style="text-align: center;">
+        &copy;2020 Private. All rights reserved.
+      </Footer>
     </Layout>
   </div>
 </template>
@@ -64,7 +39,8 @@ export default {
   name: "Home",
   computed: {
     ...mapState("body", {
-      screenHeight: state => state.screenHeight
+      screenHeight: state => state.screenHeight,
+      themeColor: state => state.themeColor
     })
   },
   data() {
@@ -108,33 +84,42 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 .home {
-  .head {
-    height: 60px;
-    background-color: #909399;
-    .content {
-      float: right;
-      height: 60px;
-      .content-list {
-        list-style: none;
-        margin: 0;
-        li {
-          display: inline-block;
-          padding: 0 10px;
-          text-align: center;
-          margin-right: 10px;
-          line-height: 60px;
-          color: #fff;
-          cursor: pointer;
-        }
-        .active {
-          background-color: #409eff;
-        }
-      }
-    }
+  .layout {
+    border: 1px solid #d7dde4;
+    background: #f5f7f9;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
   }
-  .footer {
+  .layout-logo {
+    width: 100px;
+    height: 30px;
+    background: #5b6270;
+    border-radius: 3px;
+    float: left;
+    position: relative;
+    top: 15px;
+    left: 20px;
+  }
+  .layout-nav {
+    padding-left: 150px;
+  }
+  .layout-nav:after {
+    clear: both;
+    content: '*';
+    font-size: 0;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+  .layout-search {
+    width: 300px;
+    float: right;
+    position: relative;
+    top: 15px;
+  }
+  .layout-footer-center {
     text-align: center;
-    line-height: 60px;
   }
 }
 </style>
