@@ -1,11 +1,19 @@
 <template>
-  <div class="base"></div>
+  <div class="article">
+    {{id}}
+  </div>
 </template>
 <script>
 export default {
-  name:"Base",
+  name:"Article",
   data(){
     return {
+    }
+  },
+  props: {
+    id: {
+      type: String,
+      required: true
     }
   },
   methods:{},

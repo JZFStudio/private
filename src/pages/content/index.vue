@@ -1,62 +1,146 @@
 <template>
   <div class="index">
     <div class="left-side">
-      <Card v-for="item in list" :key="item.id" style="margin-bottom: 10px;">
+      <Carousel autoplay loop dots="none" arrow="never">
+        <CarouselItem v-for="item in iconList" :key="item.index">
+          <img :src="item.src" :alt="item.alt" class="icon">
+        </CarouselItem>
+      </Carousel>
+      <div class="intro">
+        <p class="title">本站介绍</p>
+        <div class="content">
+          欢迎来到这里，目前还在搭建中，敬请期待！
+        </div>
+      </div>
+      <div class="timeline">
+        <Timeline pending>
+          <TimelineItem>发布1.0版本</TimelineItem>
+          <TimelineItem>发布2.0版本</TimelineItem>
+          <TimelineItem>发布3.0版本</TimelineItem>
+        </Timeline>
+      </div>
+    </div>
+    <div class="right-side" ref="listContent" :style="{height: screenHeight - 133 + 'px'}">
+      <Card v-for="item in showList" :key="item.id" style="margin-bottom: 10px; cursor: pointer;" :to="'/dev/' + item.id">
         <p slot="title" class="title">{{item.title}}</p>
         <div class="content">
           <p><span class="tag">{{item.date}}</span><Tag checkable color="primary" v-for="(i, index) in item.tags" :key="index">{{i}}</Tag></p>
           <p>{{item.content}}</p>
         </div>
       </Card>
-    </div>
-    <div class="right-side">
-      
+      <Page :total="total" show-elevator show-total style="text-align: center;" @on-change="changePage"/>
     </div>
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 export default {
   name:"Index",
   data(){
     return {
-      list: [
+      list: [],
+      page: 1,
+      showList: [],
+      total: null,
+      iconList: [
         {
-          id: 0,
-          title: '测试标题',
-          content: '测试内容',
-          date: '2020-01-01 12:12:12',
-          tags: ['标签一', '标签二', '标签三']
+          src: '../../../static/img/angular.jpeg',
+          alt: 'angular'
         },
         {
-          id: 1,
-          title: '测试标题',
-          content: '测试内容',
-          date: '2020-01-01 12:12:12',
-          tags: ['标签一', '标签二', '标签三']
+          src: '../../../static/img/iview.jpeg',
+          alt: 'iview'
         },
         {
-          id: 2,
-          title: '测试标题',
-          content: '测试内容',
-          date: '2020-01-01 12:12:12',
-          tags: ['标签一', '标签二', '标签三']
+          src: '../../../static/img/less.jpeg',
+          alt: 'less'
+        },
+        {
+          src: '../../../static/img/npm.jpeg',
+          alt: 'npm'
+        },
+        {
+          src: '../../../static/img/react.jpeg',
+          alt: 'react'
+        },
+        {
+          src: '../../../static/img/vue.jpeg',
+          alt: 'vue'
+        },
+        {
+          src: '../../../static/img/webpack.jpg',
+          alt: 'webpack'
         }
       ]
     }
   },
-  methods:{},
-  created(){},
+  computed: {
+    ...mapState("body", {
+      screenHeight: state => state.screenHeight
+    })
+  },
+  methods:{
+    changePage(page) {
+      console.log('page', page);
+      this.showList = this.list.slice((page - 1) * 10, page * 10);
+      if (this.$refs.listContent) {
+        this.$refs.listContent.scrollTop = 0;
+      }
+    }
+  },
+  created(){
+    let total = 100, list = [];
+    while (total > 0) {
+      list.push({
+        id: 100 - total,
+        title: '测试标题' + (100 - total),
+        content: '测试内容',
+        date: '2020-01-01 12:12:12',
+        tags: ['标签一', '标签二', '标签三']
+      });
+      total--;
+    }
+    this.list = list;
+    this.showList = this.list.slice(0, 10);
+    this.total = list.length;
+  },
   mounted(){}
 }
 </script>
 <style lang="less" scoped>
   .index {
-    height: 100%;
     .left-side {
-      width: 75%;
+      width: 25%;
       float: left;
-      height: 100%;
       padding: 10px 5px 10px 10px;
+      .icon {
+        width: 100%;
+        height: 200px;
+        img {
+          max-width: 100%;
+          max-height: 200px;
+        }
+      }
+      .intro {
+        margin: 10px 0;
+        border: 1px dashed #ccc;
+        border-radius: 5px;
+        padding: 5px;
+        .title {
+          font-size: 14px;
+          font-weight: bold;
+        }
+      }
+      .timeline {
+        padding-top: 10px;
+      }
+    }
+    .right-side {
+      width: 75%;
+      float: right;
+      height: 100%;
+      padding: 10px 10px 10px 5px;
+      overflow: auto;
       .title {
         font-size: 20px;
       }
@@ -65,12 +149,6 @@ export default {
           margin-right: 10px;
         }
       }
-    }
-    .right-side {
-      width: 25%;
-      float: right;
-      height: 100%;
-      padding: 10px 10px 10px 5px;
     }
   }
 </style>

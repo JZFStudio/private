@@ -3,7 +3,7 @@
     <div class="input-area">
       <p class="title">欢迎来访</p>
       <p class="item-row">
-        <label for="username" class="label">用户名</label>： <Input style="width: 300px;" id="username" suffix-icon="el-icon-user" v-model="username"></Input>
+        <label for="username" class="label">用户名</label>： <Input style="width: 300px;" id="username" suffix-icon="el-icon-user" v-model="username" />
       </p>
       <p class="item-row">
         <label for="password" class="label">密码</label>： <Input style="width: 300px;" id="password" show-password v-model="password"></Input>
@@ -49,12 +49,12 @@ export default {
       }
       utils.setCookie('username', this.username, this.remeberMe ? 24 * 3600 : 3600);
       utils.setCookie('password', this.password, this.remeberMe ? 24 * 3600 : 3600);
-      this.$router.push({path: '/'});
+      this.$router.push({path: '/home/index'});
     }
   },
   created(){
     if (utils.checkLogin()) {
-      this.$router.replace({path: '/'});
+      this.$router.replace({path: '/home/index'});
     }
   },
   mounted(){

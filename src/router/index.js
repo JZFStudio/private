@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 import Home from '@/pages/Home'
 import Index from '@/pages/content/Index'
-import Base from '@/pages/content/Base'
+import Dev from '@/pages/content/Dev'
 import Login from '@/pages/Login'
 import NotFound from '@/pages/NotFound'
 
@@ -13,7 +13,7 @@ Vue.use(Router)
 const router = new Router({
   routes: [
     {
-      path: '/',
+      path: '/home',
       name: 'Home',
       meta: {
         check: true
@@ -26,9 +26,9 @@ const router = new Router({
           component: Index
         },
         {
-          path: 'base',
-          name: 'Base',
-          component: Base
+          path: 'dev',
+          name: 'Dev',
+          component: Dev
         }
       ]
     },
@@ -47,10 +47,14 @@ const router = new Router({
 });
 
 router.beforeEach(function(to, from, next) {
+  console.log('beforeEach');
   if ((to.path === '/login') || !(to.meta && to.meta.check) || utils.checkLogin()) {
     next();
   } else {
     next({path: '/login'});
+  }
+  if (to.path === '/') {
+    next({path: '/home/index'});
   }
 })
 

@@ -2,20 +2,14 @@
   <div class="home" style="height: 100%;">
     <Layout style="height: 100%;">
       <Header>
-        <Menu mode="horizontal" theme="dark" active-name="1">
+        <Menu mode="horizontal" theme="dark" :active-name="activedItem" @on-select="goTo">
           <div class="layout-logo">Logo</div>
           <div class="layout-nav">
-            <MenuItem name="1">
-              <Icon type="ios-navigate"></Icon>首页
-            </MenuItem>
-            <MenuItem name="2">
-              <Icon type="ios-keypad"></Icon>前端开发
-            </MenuItem>
-            <MenuItem name="3">
-              <Icon type="ios-analytics"></Icon>其他
+            <MenuItem :name="item.id" v-for="item in navList" :key="item.id">
+              {{item.label}}
             </MenuItem>
             <div class="layout-search">
-              <Input search enter-button placeholder="Enter something..." />
+              <Input search enter-button placeholder="站内搜索" />
             </div>
           </div>
         </Menu>
@@ -33,7 +27,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from "vuex"
 
 export default {
   name: "Home",
@@ -50,32 +44,40 @@ export default {
         {
           id: 0,
           label: "首页",
-          path: "/index"
+          path: "/home"
         },
         {
           id: 1,
-          label: "基础",
-          path: "/base"
+          label: "前端开发",
+          path: "/dev"
         },
         {
           id: 2,
-          label: "待命名",
-          path: ""
+          label: "其他",
+          path: "/other"
         }
       ]
     };
   },
   methods: {
-    goTo(item) {
-      console.log("goTo", item);
-      if (window.location.hash.indexOf(item.path) === -1) {
-        this.$router.push(item.path);
-        this.activedItem = item.id;
+    goTo(id) {
+      console.log("goTo", id);
+      if (window.location.hash.indexOf(this.navList[id].path) === -1) {
+        this.$router.push('/home' + this.navList[id].path);
+        this.activedItem = this.navList[id].id;
       }
     }
   },
   created() {
-    this.$router.push('/index');
+    let hashList = this.navList.map(item => {
+      return item.path.replace('/', '');
+    });
+    hashList.forEach((item, index) => {
+      let i = window.location.hash.indexOf(item);
+      if (i !== -1) {
+        this.activedItem = index;
+      }
+    })
   },
   mounted() {}
 };
@@ -84,6 +86,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 .home {
+  min-width: 1000px;
   .layout {
     border: 1px solid #d7dde4;
     background: #f5f7f9;

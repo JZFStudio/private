@@ -1,5 +1,7 @@
 <template>
-  <div class="not-found"></div>
+  <div class="not-found">
+    This is not found.
+  </div>
 </template>
 <script>
 export default {
