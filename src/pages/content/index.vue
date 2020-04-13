@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <div class="left-side">
-      <Carousel autoplay loop dots="none" arrow="never">
+      <Carousel autoplay loop dots="none" arrow="never" @on-click="goTo" :radius-dot="true" style="cursor: pointer;">
         <CarouselItem v-for="item in iconList" :key="item.index">
           <img :src="item.src" :alt="item.alt" class="icon">
         </CarouselItem>
@@ -45,31 +45,38 @@ export default {
       iconList: [
         {
           src: '../../../static/img/angular.jpeg',
-          alt: 'angular'
+          alt: 'angular',
+          url: 'https://angular.cn/'
         },
         {
           src: '../../../static/img/iview.jpeg',
-          alt: 'iview'
+          alt: 'iview',
+          url: 'https://www.iviewui.com/'
         },
         {
           src: '../../../static/img/less.jpeg',
-          alt: 'less'
+          alt: 'less',
+          url: 'http://lesscss.cn/'
         },
         {
           src: '../../../static/img/npm.jpeg',
-          alt: 'npm'
+          alt: 'npm',
+          url: 'https://www.npmjs.com/'
         },
         {
           src: '../../../static/img/react.jpeg',
-          alt: 'react'
+          alt: 'react',
+          url: 'https://react.docschina.org/'
         },
         {
           src: '../../../static/img/vue.jpeg',
-          alt: 'vue'
+          alt: 'vue',
+          url: 'https://cn.vuejs.org/'
         },
         {
           src: '../../../static/img/webpack.jpg',
-          alt: 'webpack'
+          alt: 'webpack',
+          url: 'https://www.webpackjs.com/'
         }
       ]
     }
@@ -86,6 +93,10 @@ export default {
       if (this.$refs.listContent) {
         this.$refs.listContent.scrollTop = 0;
       }
+    },
+    goTo(index) {
+      console.log('goTo index', index);
+      window.open(this.iconList[index].url, '_blank');
     }
   },
   created(){
@@ -113,13 +124,10 @@ export default {
       width: 25%;
       float: left;
       padding: 10px 5px 10px 10px;
+      text-align: center;
       .icon {
-        width: 100%;
-        height: 200px;
-        img {
-          max-width: 100%;
-          max-height: 200px;
-        }
+        max-width: 100%;
+        max-height: 200px;
       }
       .intro {
         margin: 10px 0;

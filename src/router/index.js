@@ -13,11 +13,8 @@ Vue.use(Router)
 const router = new Router({
   routes: [
     {
-      path: '/home',
+      path: '/',
       name: 'Home',
-      meta: {
-        check: true
-      },
       component: Home,
       children: [
         {
@@ -26,7 +23,7 @@ const router = new Router({
           component: Index
         },
         {
-          path: 'dev',
+          path: 'dev/:id',
           name: 'Dev',
           component: Dev
         }
@@ -35,7 +32,6 @@ const router = new Router({
     {
       path: '/login',
       name: 'Login',
-      meta: {},
       component: Login
     },
     {
@@ -48,13 +44,13 @@ const router = new Router({
 
 router.beforeEach(function(to, from, next) {
   console.log('beforeEach');
-  if ((to.path === '/login') || !(to.meta && to.meta.check) || utils.checkLogin()) {
+  if ((to.path === '/login') || utils.checkLogin()) {
     next();
   } else {
     next({path: '/login'});
   }
   if (to.path === '/') {
-    next({path: '/home/index'});
+    next({path: '/index'});
   }
 })
 

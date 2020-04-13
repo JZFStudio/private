@@ -44,7 +44,7 @@ export default {
         {
           id: 0,
           label: "首页",
-          path: "/home"
+          path: "/index"
         },
         {
           id: 1,
@@ -63,7 +63,7 @@ export default {
     goTo(id) {
       console.log("goTo", id);
       if (window.location.hash.indexOf(this.navList[id].path) === -1) {
-        this.$router.push('/home' + this.navList[id].path);
+        this.$router.push(this.navList[id].path);
         this.activedItem = this.navList[id].id;
       }
     }
